@@ -29,16 +29,20 @@
                     <?= $this->session->flashdata('message'); ?>
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="umum-tab" data-bs-toggle="tab" href="#umum" role="tab" aria-controls="umum" aria-selected="true">Timeline</a>
+                            <a class="nav-link active" id="umum-tab" data-bs-toggle="tab" href="#umum" role="tab"
+                                aria-controls="umum" aria-selected="true">Timeline</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="periode-tab" data-bs-toggle="tab" href="#periode" role="tab" aria-controls="periode" aria-selected="false">Periode</a>
+                            <a class="nav-link" id="periode-tab" data-bs-toggle="tab" href="#periode" role="tab"
+                                aria-controls="periode" aria-selected="false">Periode</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="pendidikan-tab" data-bs-toggle="tab" href="#pendidikan" role="tab" aria-controls="pendidikan" aria-selected="false">Pendidikan</a>
+                            <a class="nav-link" id="pendidikan-tab" data-bs-toggle="tab" href="#pendidikan" role="tab"
+                                aria-controls="pendidikan" aria-selected="false">Pendidikan</a>
                         </li>
                         <li class="nav-item">
-                            <a href="" class="nav-link active" id="rps-setting" data-bs-toggle="tab" role="tab" aria-controls="umum" aria-selected="true">RPS Setting</a>
+                            <a href="" class="nav-link active" id="rps-setting" data-bs-toggle="tab" role="tab"
+                                aria-controls="umum" aria-selected="true">RPS Setting</a>
                         </li>
                     </ul>
                 </div>
@@ -66,15 +70,18 @@
                                         <?php
                                         $no = 1;
                                         foreach ($timeline as $timeline) : ?>
-                                            <tr class="text-center">
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $timeline->waktu_mulai ?></td>
-                                                <td><?= $timeline->waktu_akhir ?></td>
-                                                <td>
-                                                    <button class="btn btn-primary" data-bs-target="#update" data-bs-toggle="modal" type="button"><i class="fas fa-pencil"></i></button>
-                                                    <a href="<?= base_url('reset_timeline') ?>" class="btn btn-warning"><i class="fas fa-refresh"></i></a>
-                                                </td>
-                                            </tr>
+                                        <tr class="text-center">
+                                            <td><?= $no++ ?></td>
+                                            <td><?= $timeline->waktu_mulai ?></td>
+                                            <td><?= $timeline->waktu_akhir ?></td>
+                                            <td>
+                                                <button class="btn btn-primary" data-bs-target="#update"
+                                                    data-bs-toggle="modal" type="button"><i
+                                                        class="fas fa-pencil"></i></button>
+                                                <a href="<?= base_url('reset_timeline') ?>" class="btn btn-warning"><i
+                                                        class="fas fa-refresh"></i></a>
+                                            </td>
+                                        </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>
@@ -82,9 +89,11 @@
                         </div>
 
                         <div class="tab-pane fade" id="periode" role="tabpanel" aria-labelledby="periode-tab">
-                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tambahPeriode" type="button">Tambah Periode</button>
+                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tambahPeriode"
+                                type="button">Tambah Periode</button>
                             <div class="table-responsive pt-3">
-                                <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-bordered table-hover" id="dataTable"
+                                    width="100%" cellspacing="0">
                                     <thead>
                                         <tr class="text-center">
                                             <th class="text-center">No</th>
@@ -96,13 +105,13 @@
                                         <?php
                                         $no = 1;
                                         foreach ($periode as $periode) : ?>
-                                            <tr class="text-center">
-                                                <td class="text-center"><?= $no++ ?></td>
-                                                <td class="text-center"><?= $periode->nama_periode ?></td>
-                                                <td class="text-center">
-                                                    <button class="btn btn-info btn-sm">Action</button>
-                                                </td>
-                                            </tr>
+                                        <tr class="text-center">
+                                            <td class="text-center"><?= $no++ ?></td>
+                                            <td class="text-center"><?= $periode->nama_periode ?></td>
+                                            <td class="text-center">
+                                                <button class="btn btn-info btn-sm">Action</button>
+                                            </td>
+                                        </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>
@@ -110,9 +119,11 @@
                         </div>
 
                         <div class="tab-pane fade" id="pendidikan" role="tabpanel" aria-labelledby="pendidikan-tab">
-                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tambahPendidikan" type="button">Tambah Pendidikan</button>
+                            <button class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#tambahPendidikan"
+                                type="button">Tambah Pendidikan</button>
                             <div class="table-responsive pt-3">
-                                <table class="table table-striped table-bordered table-hover" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-striped table-bordered table-hover" id="dataTable"
+                                    width="100%" cellspacing="0">
                                     <thead>
                                         <tr class="text-center">
                                             <th class="text-center">No</th>
@@ -124,13 +135,13 @@
                                         <?php
                                         $no = 1;
                                         foreach ($pendidikan as $pendidikan) : ?>
-                                            <tr class="text-center">
-                                                <td><?= $no++ ?></td>
-                                                <td><?= $pendidikan->nama_pendidikan ?></td>
-                                                <td>
-                                                    <button class="btn btn-info btn-sm">Action</button>
-                                                </td>
-                                            </tr>
+                                        <tr class="text-center">
+                                            <td><?= $no++ ?></td>
+                                            <td><?= $pendidikan->nama_pendidikan ?></td>
+                                            <td>
+                                                <button class="btn btn-info btn-sm">Action</button>
+                                            </td>
+                                        </tr>
                                         <?php endforeach ?>
                                     </tbody>
                                 </table>
@@ -152,11 +163,13 @@
                     <form action="<?= base_url('tambah_timeline') ?>" method="POST">
                         <div class="form-group">
                             <label for="">Mulai</label>
-                            <input type="datetime-local" name="waktu_mulai" id="waktu_mulai" class="form-control" required>
+                            <input type="datetime-local" name="waktu_mulai" id="waktu_mulai" class="form-control"
+                                required>
                         </div>
                         <div class="form-group">
                             <label for="">Selesai</label>
-                            <input type="datetime-local" name="waktu_akhir" id="waktu_akhir" class="form-control" required>
+                            <input type="datetime-local" name="waktu_akhir" id="waktu_akhir" class="form-control"
+                                required>
                         </div>
                         <div class="footer">
                             <button class="btn btn-primary" type="submit">Simpan</button>
@@ -170,7 +183,8 @@
 
 
     <!-- modal tambah periode -->
-    <div class="modal fade text-left" id="tambahPeriode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal fade text-left" id="tambahPeriode" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -203,7 +217,8 @@
     <!-- end modal tambah periode -->
 
     <!-- modal tambah pendidikan -->
-    <div class="modal fade text-left" id="tambahPendidikan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33" aria-hidden="true">
+    <div class="modal fade text-left" id="tambahPendidikan" tabindex="-1" role="dialog" aria-labelledby="myModalLabel33"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable" role="document">
             <div class="modal-content">
                 <div class="modal-header">

@@ -1,120 +1,103 @@
 <?php
-
+defined('BASEPATH') or exit('No direct script access allowed');
 
 class Setting extends CI_Controller
 {
 
-
     public function __construct()
     {
         parent::__construct();
-        $this->load->library('form_validation');
-        $this->load->model('Pendidikan_model');
-        $this->load->model('Periode_model');
-        $this->load->model('Timeline_model');
+        $this->load->model('Setting_model');
+        $this->load->model('Pembayaran_model');
+        if (!$this->session->userdata('logged_in')) {
+            redirect(base_url('auth'));
+        }
     }
 
     public function index()
     {
-        $data['periode']    = $this->Periode_model->GetAllPeriode();
-        $data['pendidikan'] = $this->Pendidikan_model->GetPendidikan();
-        $data['timeline']   = $this->Timeline_model->getTimeline();
-        $this->load->view('admin/templates_admin/header');
-        $this->load->view('admin/templates_admin/sidebar');
-        $this->load->view('admin/setting/umum', $data);
-        $this->load->view('admin/templates_admin/footer');
+        $data['setting']    = $this->Setting_model->GetSetting();
+        $data['pembayaran'] = $this->Pembayaran_model->GetHasil();
+        $this->load->view('layouts/template_admin/header');
+        $this->load->view('layouts/template_admin/sidebar');
+        $this->load->view('layouts/template_admin/navbar');
+        $this->load->view('admin/setting', $data);
+        $this->load->view('layouts/template_admin/footer');
     }
 
-    public function Timeline()
+    public function umum()
     {
-        $waktu_awal     = $this->input->post('waktu_mulai');
-        $waktu_akhir    = $this->input->post('waktu_akhir');
+        $facebook       = $this->input->post('facebook');
+        $instagram      = $this->input->post('instagram');
+        $alamat_lengkap = $this->input->post('alamat');
+        $google_maps    = $this->input->post('google_maps');
 
         $data = array(
-            'waktu_mulai'   => $waktu_awal,
-            'waktu_akhir'   => $waktu_akhir
+            'facebook'      => $facebook,
+            'instagram'     => $instagram,
+            'alamat_lengkap'=> $alamat_lengkap,
+            'google_maps'   => $google_maps
         );
 
-        $insert = $this->Timeline_model->AddTimeline($data);
+        $insert = $this->Setting_model->UpdateUmum($data);
 
         if ($insert) {
-            $this->session->set_flashdata('message', '<div class="alert alert-primary" role="alert">
-            Berhasil Tambah Data Timeline
-            </div>');
-            redirect(base_url('setting'));
-        } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Gagal Tambah Data Timeline
-            </div>');
-            redirect(base_url('setting'));
+            $this->session->set_flashdata('sukses', 'Sukses Update Setting');
+            redirect(base_url('admin/setting'));
+        }        if ($insert) {
+            $this->session->set_flashdata('gagal', 'Gagal Update Setting');
+            redirect(base_url('admin/setting'));
         }
+        
     }
 
-    public function ResetTimeline()
+    public function Website()
     {
+        $nama_website = $this->input->post('nama_website');
+
         $data = array(
-            'waktu_mulai'   => '0000-00-00 00:00:00',
-            'waktu_akhir'   => '0000-00-00 00:00:00'
+            'nama_website'      => $nama_website
         );
 
-        $insert = $this->Timeline_model->AddTimeline($data);
+        $config['upload_path']          = './uploads/website';
+        $config['allowed_types']        = 'gif|jpg|png|pdf|jpeg';
 
-        if ($insert) {
-            $this->session->set_flashdata('message', '<div class="alert alert-primary" role="alert">
-            Berhasil Reset Data Timeline
-            </div>');
-            redirect(base_url('setting'));
-        } else {
-            $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
-            Gagal Reset Data Timeline
-            </div>');
-            redirect(base_url('setting'));
+        $this->load->library('upload', $config);
+
+        if (!$_FILES['icon_website']) {
+            $this->session->set_flashdata('gagal', 'file tidak boleh kosong');
+            redirect(base_url('admin/setting'));
+        }else {
+            if (!$this->upload->do_upload('icon_website')) {
+                $this->session->set_flashdata('gagal', 'gagal upload gambar');
+                redirect(base_url('admin/setting'));
+            }else {
+                $upload_data = array('uploads' => $this->upload->data());
+                $data['icon_website']     = $upload_data['uploads']['file_name'];
+            }
         }
-    }
 
-    public function AddPeriode()
-    {
-        $this->CheckRulesForm();
-
-        if ($this->form_validation->run() == false) {
-            $data['periode']    = $this->Periode_model->GetAllPeriode();
-            $data['pendidikan'] = $this->Pendidikan_model->GetPendidikan();
-            $this->load->view('admin/templates_admin/header');
-            $this->load->view('admin/templates_admin/sidebar');
-            $this->load->view('admin/setting/umum', $data);
-            $this->load->view('admin/templates_admin/footer');
-        } else {
-            $data = [
-                'nama_periode'  => $this->input->post('nama_periode'),
-            ];
-
-            $this->Periode_model->TambahPeriode($data);
-            redirect(base_url('setting'));
+        if (!$_FILES['logo_website']) {
+            $this->session->set_flashdata('gagal', 'file tidak boleh kosong');
+            redirect(base_url('admin/setting'));
+        }else {
+            if (!$this->upload->do_upload('logo_website')) {
+                $this->session->set_flashdata('gagal', 'gagal upload gambar');
+                redirect(base_url('admin/setting'));
+            }else {
+                $upload_data = array('uploads' => $this->upload->data());
+                $data['logo_website']     = $upload_data['uploads']['file_name'];
+            }
         }
-    }
 
-    public function AddPendidikan()
-    {
-        $this->form_validation->set_rules('nama_pendidikan', 'Nama Periode', 'trim|required');
+        $update = $this->Setting_model->UpdateUmum($data);
 
-        if ($this->form_validation->run() == false) {
-            $data['periode']    = $this->Periode_model->GetAllPeriode();
-            $this->load->view('admin/templates_admin/header');
-            $this->load->view('admin/templates_admin/sidebar');
-            $this->load->view('admin/setting/umum', $data);
-            $this->load->view('admin/templates_admin/footer');
-        } else {
-            $data = [
-                'nama_pendidikan'   => $this->input->post('nama_pendidikan'),
-            ];
-
-            $this->Pendidikan_model->TambahPendidikan($data);
-            redirect(base_url('setting'));
+        if ($update) {
+            $this->session->set_flashdata('sukses', 'berhasil update icon,logo,dan nama website berhasil di update');
+            redirect(base_url('admin/setting'));
+        }else {
+            $this->session->set_flashdata('gagal', 'gagal update nama,icon dan logo website');
+            redirect(base_url('admin/setting'));
         }
-    }
-
-    function CheckRulesForm()
-    {
-        $this->form_validation->set_rules('nama_periode', 'Nama Periode', 'trim|required');
     }
 }

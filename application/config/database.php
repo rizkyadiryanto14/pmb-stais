@@ -75,10 +75,15 @@ $query_builder = TRUE;
 
 $db['default'] = array(
 	'dsn'	=> '',
+	// 'hostname' => 'localhost',
+	// 'username' => 'jaksparo_pmb',
+	// 'password' => 'Rizky201121!?',
+	// 'database' => 'jaksparo_pmb',
+	// 'dbdriver' => 'mysqli',
 	'hostname' => 'localhost',
 	'username' => 'root',
 	'password' => '',
-	'database' => 'portal_dosen',
+	'database' => 'pmb',
 	'dbdriver' => 'mysqli',
 	'dbprefix' => '',
 	'pconnect' => FALSE,
